@@ -1,0 +1,78 @@
+
+  <% if(flash && flash.message) { %>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="alert alert-success">
+          <strong><%=flash.message%></strong><br>
+
+            <% if(flash && flash.error) { %>
+
+              <% for (var key in flash.error.ValidationError) { %>
+
+                <% if (flash.error.ValidationError.hasOwnProperty(key)) {
+                    var error_field = flash.error.ValidationError[key];
+                %>
+
+                  <h5><%=key.replace('_', ' ')%></h5>
+
+                    <ul>
+                        <% for(var i in error_field){ %>
+                          <li><%=error_field[i].message%></li>
+                        <% } %>
+                    </ul>
+                    
+                 <% } %>
+
+              <% } %>
+
+              <% if(flash && flash.passwordconfirmation) { %>
+                <h5><%=flash.passwordconfirmation%></h5><br>
+              <% }%>
+
+              <% if(flash && flash.error.code) { %>
+                <h5><%=flash.error.code%> : Username Already Exists!</h5><br>
+              <% }%>
+
+            <% }%>
+
+        </div>
+      </div>
+    </div>
+  <% } %>
+
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="well">
+      <h3>Register!</h3>
+      <form role="form" action="/user/create" method="post">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Username:</label>
+          <input type="username"  value="<%= (flash && flash.username) ? flash.username : '' %>" class="form-control" id="username" placeholder="Enter username" name="username">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Enter Password">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Confirm Password</label>
+          <input type="password" class="form-control" id="c_password" name="c_password" placeholder="Confirm Password">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Last Name:</label>
+          <input type="text"  value="<%= (flash && flash.last_name) ? flash.last_name : '' %>"  class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">First Name:</label>
+          <input type="text" value="<%= (flash && flash.first_name) ? flash.first_name : '' %>"  class="form-control" id="first_name" name="first_name" placeholder="Enter First Name">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Age:</label>
+          <input type="text" class="form-control" value="<%= (flash && flash.age) ? flash.age : '' %>"  id="age" name="age" placeholder="Enter your Age">
+        </div>
+    	<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+        <button type="submit" class="btn btn-primary">Register</button>
+      </form>
+    </div>
+  </div>	
+</div>
